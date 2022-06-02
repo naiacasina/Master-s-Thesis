@@ -1,4 +1,4 @@
-# Master-s-Thesis
+# Master's-Thesis
 
 ## Code in R
 
