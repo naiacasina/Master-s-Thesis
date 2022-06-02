@@ -391,5 +391,41 @@ for (i in 1:dim(surv)[1]) {
 
 # --------------  POPULATION -----------------
 
+Year <- c(2006:2019)
+population <- data.frame(Year)
+# Dates of the events
+dates <- c(2005,2010,2015)
 
+shp <- read.dbf(file="/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/Bangladesh/gadm40_BGD_shp/gadm40_BGD_3.dbf")
 
+for (i in 1:dim(shp)[1]) {population[as.character(i)] <- 0}
+
+# Load cropped and aggregated raster data
+load(file="/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/HRV/Cropped and Aggregated/population.RData")
+
+y1 <- c(2006,2007,2008,2009)
+y2 <- c(2010,2011,2012,2013,2014)
+y3 <- c(2015,2016,2017,2018,2019)
+years <- list(y1,y2,y3)
+
+for (i in 1:length(dates)) {
+  y <- years[i]
+  df_pop <- data.frame(cropped_pop[i])
+  colnames(df_pop) <- c('Year','population')
+  for (k in 1:dim(shp)[1]) {
+    population[population$Year%in%y[[1]], 1+k] <- population[population$Year%in%y[[1]], 1+k]+ df_pop$population[k]
+  }
+}
+
+# Add values to survey
+surv$pop <- 0
+for (i in 1:dim(surv)[1]) {
+  upaz <- surv$Upazila[i]
+  col_n <- df_upazila[df_upazila$shp.NAME_3==upaz, 1]    # equiv. number
+  year <- surv$Year[i]
+  pop_val <- population[population$Year==year, col_n+1]
+  surv$pop[i] <- pop_val
+}
+
+# --------------- SAVE -----------------
+save(surv,file="/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/R/Saved Data/long_data.Rdata")
