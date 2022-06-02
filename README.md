@@ -20,8 +20,8 @@ e) Population
 
 ### correlations.R
 
-I gather all the flooding events between 2006-2019 cropped to the oundaries of Bangladesh and aggregated to Upazila-level.
-Using it as an independent var, I run a regression of Reported Losses due to flooding on actual flooding events.
+I gather all the flooding events between 2006-2019 cropped to the boundaries of Bangladesh and aggregated to Upazila-level.
+Using it as an independent var, I run a regression of Reported Losses due to flooding on actual flooding events and get that actual flooding events are statistically very significant in explaining the reported losses of the respondents, which validates the flooding estimated metric as a measure. 
 
 
 ### ncdf_to_raster.R
