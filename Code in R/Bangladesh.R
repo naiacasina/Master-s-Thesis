@@ -140,11 +140,15 @@ bihs15_c1 <- bihs15_c1[!duplicated(bihs15_c1$a01),]
 bihs18_c1$a01 <- round(bihs18_c1$a01)
 bihs18_c1 <- bihs18_c1[!duplicated(bihs18_c1$a01),]
 
+# -------------- Grab coordinates from harmonized dSet -------------- 
+library(readxl)
+bihs_Harmonized <- read_excel("Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/Bangladesh/BIHS_hamonized/BIHS_harm/BIHS_household_2011_15.xlsx")
+
+
 # -------------- Creating the harmonized DSEt -------------- 
 Year <- rep(c(2006:2019),times=dim(bihs11_c1)[1])
 HH <- rep(c(1:dim(bihs11_c1)[1]), each=14)
 surv <- data.frame(HH, Year)
-
 
 # Save census datasets
 save(bihs11_c1, file="/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/HRV/Cropped and Aggregated/census11.RData")
@@ -172,70 +176,167 @@ for (i in 0:(dim(surv)[1]-1)) {
 
 # ----------- MIGRATION -----------
 surv$Migrate <- 0
+surv$Dom_migrate <- 0
 surv$Migrated_before <- 0
 
-# Migration 2011
+# All Migration 2011
 mig11 <- migrate_11[migrate_11$v1_01==1,]
+# Domestic Migration 2011
+mig_dom11 <- migrate_11[(migrate_11$v1_01==1)&(migrate_11$v1_09==1),]
+
 for (i in 1:dim(mig11)[1]) {
   if (sum(surv[surv$HH==mig11$a01[i],4])>0){
     # check whether previous members within the hh migrated
-    surv[(surv$HH==mig11$a01[i])&surv$Year==(2011-mig11$v1_03[i]),5] <- 1
+    surv[(surv$HH==mig11$a01[i])&surv$Year==(2011-mig11$v1_03[i]),"Migrated_before"] <- 1
   }
-  surv[(surv$HH==mig11$a01[i])&surv$Year==(2011-mig11$v1_03[i]),4] <- 1
+  surv[(surv$HH==mig11$a01[i])&surv$Year==(2011-mig11$v1_03[i]),"Migrate"] <- 1
 }
+for (i in 1:dim(mig_dom11)[1]) {
+  surv[(surv$HH==mig_dom11$a01[i])&surv$Year==(2011-mig_dom11$v1_03[i]),"Dom_migrate"] <- 1
+}
+
 # Migration 2015
 mig15 <- migrate_15[migrate_15$v1_01==1,]
+mig_dom15 <- migrate_15[(migrate_15$v1_01==1)&(migrate_15$v1_09==1), ]
 for (i in 1:dim(mig15)[1]) {
   if (sum(surv[surv$HH==mig15$a01[i],4])>0 | mig15$v1_15[i]==1 | mig15$v1_15[i]==3){
-    surv[(surv$HH==round(mig15$a01[i]))&(surv$Year==(2015-mig15$v1_03[i])),5] <- 1
+    surv[(surv$HH==round(mig15$a01[i]))&(surv$Year==(2015-mig15$v1_03[i])),"Migrated_before"] <- 1
   }
-  surv[(surv$HH==round(mig15$a01[i]))&(surv$Year==(2015-mig15$v1_03[i])),4] <- 1
+  surv[(surv$HH==round(mig15$a01[i]))&(surv$Year==(2015-mig15$v1_03[i])),"Migrate"] <- 1
 }
+for (i in 1:dim(mig_dom15)[1]) {
+  surv[(surv$HH==round(mig_dom15$a01[i]))&(surv$Year==(2015-mig_dom15$v1_03[i])),"Dom_migrate"] <- 1
+}
+
 # Migration 2018-2019
 mig18 <- migrate_18[migrate_18$v1_01==1,]
+mig_dom18 <- migrate_18[(migrate_18$v1_01==1)&(migrate_18$v1_09==1),]
+
 for (i in 1:dim(mig18)[1]) {
   if (sum(surv[surv$HH==mig18$a01[i],4] | mig18$v1_15[i]==1 | mig18$v1_15[i]==3)>0){
-    surv[(surv$HH==round(mig18$a01[i]))&(surv$Year==(2019-mig18$v1_03[i])),5] <- 1
+    surv[(surv$HH==round(mig18$a01[i]))&(surv$Year==(2019-mig18$v1_03[i])),"Migrated_before"] <- 1
   }
-  surv[(surv$HH==round(mig18$a01[i]))&(surv$Year==(2019-mig18$v1_03[i])),4] <- 1
+  surv[(surv$HH==round(mig18$a01[i]))&(surv$Year==(2019-mig18$v1_03[i])),"Migrate"] <- 1
+}
+for (i in 1:dim(mig_dom18)[1]) {
+  surv[(surv$HH==round(mig_dom18$a01[i]))&(surv$Year==(2019-mig_dom18$v1_03[i])),"Dom_migrate"] <- 1
 }
 
-# ----------- FLOODING LOSS -----------
-surv$loss_fl <- 0
-surv$dam_fl <- 0
+# ----------- FLOODING, CYCLONE % DROUGHT LOSS & DAMAGES -----------
+surv$loss_fl_lag <- 0
+surv$dam_fl_lag <- 0
 
-# 2010-2011
-fl_loss11 <- losses_11[losses_11$t1_02==9|losses_11$t1_02==11|losses_11$t1_02==14,]
+# losses & damages due to cyclones
+surv$loss_cy_lag <- 0
+surv$dam_cy_lag <- 0
+
+# losses & damages due to droughts
+surv$loss_dr_lag <- 0
+surv$dam_dr_lag <- 0
+
+# 2010-2011 -----------
+fl_loss11 <- losses_11[losses_11$t1_02==6|losses_11$t1_02==9|losses_11$t1_02==11|losses_11$t1_02==14,]
 fl_dam11 <- na.omit(damage_11[damage_11$i1_09b==1,])
 
+fl_dr_loss11 <- losses_11[losses_11$t1_02==10,]   # major loss due to droughts
+fl_dr_dam11 <- na.omit(damage_11[damage_11$i1_09b%in%c(4),])    # major harverst damages due to droughts
+
+fl_cy_loss11 <- losses_11[losses_11$t1_02==10,]   # major loss due to cyclones
+fl_cy_dam11 <- na.omit(damage_11[damage_11$i1_09b%in%c(5),])    # major harverst damages due to cyclones
+
 for (i in 1:dim(fl_loss11)[1]) {
-  surv[(surv$HH==fl_loss11$a01[i])&(surv$Year==fl_loss11$t1_05[i]), "loss_fl"] <- 1
+  surv[(surv$HH==fl_loss11$a01[i])&(surv$Year==(fl_loss11$t1_05[i]+1)), "loss_fl_lag"] <- 1
 }
+for (i in 1:dim(fl_dr_loss11)[1]) {
+  surv[(surv$HH==fl_dr_loss11$a01[i])&(surv$Year==(fl_dr_loss11$t1_05[i]+1)), "loss_dr_lag"] <- 1
+  surv[(surv$HH==fl_dr_loss11$a01[i])&(surv$Year==(fl_dr_loss11$t1_05[i]+1)), "loss_cy_lag"] <- 1
+}
+
 for (i in 1:dim(fl_dam11)[1]) {
-  surv[(surv$HH==fl_dam11$a01[i])&(surv$Year==2011), "dam_fl"] <- 1
+  surv[(surv$HH==fl_dam11$a01[i])&(surv$Year%in%c(2012,2013)), "dam_fl_lag"] <- 1
+}
+for (i in 1:dim(fl_dr_dam11)[1]) {
+  surv[(surv$HH==fl_dr_dam11$a01[i])&(surv$Year%in%c(2012,2013)), "dam_dr_lag"] <- 1
+}
+for (i in 1:dim(fl_cy_dam11)[1]) {
+  surv[(surv$HH==fl_cy_dam11$a01[i])&(surv$Year%in%c(2012,2013)), "dam_cy_lag"] <- 1
 }
 
-# 2015
-fl_loss15 <- losses_15[losses_15$t1_02==9|losses_15$t1_02==11|losses_15$t1_02==14,]
+# 2015 -----------
+fl_loss15 <- losses_15[losses_15$t1_02==6|losses_15$t1_02==9|losses_15$t1_02==11|losses_15$t1_02==14,]
 fl_dam15 <- na.omit(damage_15[damage_15$i1_09b==1,c(1,13)])
+
+# major loss due to other reasons drought
+fl_dr_loss15 <- losses_15[losses_15$t1_02==10,]
+# major damage to crops due to other reasons
+fl_dr_dam15 <- na.omit(damage_15[damage_15$i1_09b%in%c(4),c(1,13)])
+
+# major loss due to other reasons cyclone
+fl_cy_loss15 <- losses_15[losses_15$t1_02==37|losses_15$t1_02==38|losses_15$t1_02==39,]
+# major damage to crops due to other reasons
+fl_cy_dam15 <- na.omit(damage_15[damage_15$i1_09b%in%c(5),c(1,13)])
+
+  
 for (i in 1:dim(fl_loss15)[1]) {
-  surv[(surv$HH==round(fl_loss15$a01[i]))&(surv$Year==fl_loss15$t1_05[i]), "loss_fl"] <- 1
+  surv[(surv$HH==round(fl_loss15$a01[i]))&(surv$Year==(fl_loss15$t1_05[i]+1)), "loss_fl_lag"] <- 1
 }
-for (i in 1:dim(fl_dam15)[1]) {
-  surv[(surv$HH==round(fl_dam15$a01[i]))&(surv$Year==2015), "dam_fl"] <- 1
+for (i in 1:dim(fl_dr_loss15)[1]) {
+  surv[(surv$HH==round(fl_dr_loss15$a01[i]))&(surv$Year==(fl_dr_loss15$t1_05[i]+1)), "loss_dr_lag"] <- 1
+}
+for (i in 1:dim(fl_cy_loss15)[1]) {
+  surv[(surv$HH==round(fl_cy_loss15$a01[i]))&(surv$Year==(fl_cy_loss15$t1_05[i]+1)), "loss_cy_lag"] <- 1
 }
 
-# 2018-2019
-fl_loss18 <- losses_18[losses_18$t1b_01==1|losses_18$t1b_01==37|losses_18$t1b_01==38|losses_18$t1b_01==40,]
+
+for (i in 1:dim(fl_dam15)[1]) {
+  surv[(surv$HH==round(fl_dam15$a01[i]))&(surv$Year%in%c(2015,2016,2017)), "dam_fl_lag"] <- 1
+}
+for (i in 1:dim(fl_dr_dam15)[1]) {
+  surv[(surv$HH==round(fl_dr_dam15$a01[i]))&(surv$Year%in%c(2015,2016,2017)), "dam_dr_lag"] <- 1
+}
+for (i in 1:dim(fl_cy_dam15)[1]) {
+  surv[(surv$HH==round(fl_cy_dam15$a01[i]))&(surv$Year%in%c(2015,2016,2017)), "dam_cy_lag"] <- 1
+}
+
+# 2018-2019 -----------
+fl_loss18 <- losses_18[losses_18$t1b_01==6|losses_18$t1b_01==9|losses_18$t1b_01==10|losses_18$t1b_01==13|losses_18$t1b_01==14|losses_18$t1b_01==31|losses_18$t1b_01==33,]
 fl_dam18 <- na.omit(damage_18[damage_18$i1_09b==1,c(1,17)])
+
+fl_dr_loss18 <- losses_18[losses_18$t1b_01==45,]
+fl_dr_dam18 <- na.omit(damage_18[damage_18$i1_09b%in%c(4),c(1,17)])
+
+fl_cy_loss18 <- losses_18[losses_18$t1b_01==42|losses_18$t1b_01==46,]
+fl_cy_dam18 <- na.omit(damage_18[damage_18$i1_09b%in%c(5),c(1,17)])
+
+
 for (i in 1:dim(fl_loss18)[1]) {
   if(fl_loss18$t1b_03[i]==1){
     y <- bihs18_c1[bihs18_c1$a01==fl_loss18$a01[i], "a16_1_yy"]
   }else{y<-2016}
-  surv[(surv$HH==round(fl_loss18$a01[i]))&(surv$Year==y[[1]]), "loss_fl"] <- 1
+  surv[(surv$HH==round(fl_loss18$a01[i]))&(surv$Year==(as.numeric(as.character(y[[1]]))+1)), "loss_fl_lag"] <- 1
 }
+for (i in 1:dim(fl_dr_loss18)[1]) {
+  if(fl_dr_loss18$t1b_03[i]==1){
+    y <- bihs18_c1[bihs18_c1$a01==fl_dr_loss18$a01[i], "a16_1_yy"]
+  }else{y<-2016}
+  surv[(surv$HH==round(fl_dr_loss18$a01[i]))&(surv$Year==(as.numeric(as.character(y[[1]]))+1)), "loss_dr_lag"] <- 1
+}
+for (i in 1:dim(fl_cy_loss18)[1]) {
+  if(fl_cy_loss18$t1b_03[i]==1){
+    y <- bihs18_c1[bihs18_c1$a01==fl_cy_loss18$a01[i], "a16_1_yy"]
+  }else{y<-2016}
+  surv[(surv$HH==round(fl_cy_loss18$a01[i]))&(surv$Year==(as.numeric(as.character(y[[1]]))+1)), "loss_cy_lag"] <- 1
+}
+
+
 for (i in 1:dim(fl_dam18)[1]) {
-  surv[(surv$HH==round(fl_dam18$a01[i]))&(surv$Year==2018), "dam_fl"] <- 1
+  surv[(surv$HH==round(fl_dam18$a01[i]))&(surv$Year%in%c(2018,2019)), "dam_fl_lag"] <- 1
+}
+for (i in 1:dim(fl_dr_dam18)[1]) {
+  surv[(surv$HH==round(fl_dr_dam18$a01[i]))&(surv$Year%in%c(2018,2019)), "dam_dr_lag"] <- 1
+}
+for (i in 1:dim(fl_cy_dam18)[1]) {
+  surv[(surv$HH==round(fl_cy_dam18$a01[i]))&(surv$Year%in%c(2018,2019)), "dam_cy_lag"] <- 1
 }
 
 # ----------- RELIGION -----------
@@ -299,7 +400,7 @@ loans_18 <- na.omit(loans_18[loans_18$f06_a==1, c(1,19)])
 
 subsistence <- c(10,12,13,17,25)
 others <- c(1:26)
-others <- others[!others %in% subsistence]
+others <- others[!others %in% subsistence & !others %in% c(24)]
 
 # check the years!!!!! should I include them this way??
 y_11 <- c(2006:2011)
@@ -389,6 +490,8 @@ for (i in 1:dim(surv)[1]) {
   surv$f_sec[i] <- f_sec_value
 }
 
+surv$f_sec <- unlist(surv$f_sec)
+
 # --------------  POPULATION -----------------
 
 Year <- c(2006:2019)
@@ -426,6 +529,106 @@ for (i in 1:dim(surv)[1]) {
   pop_val <- population[population$Year==year, col_n+1]
   surv$pop[i] <- pop_val
 }
+surv$pop <- unlist(surv$pop)
 
+# ---------------- FLOODING VALUES ----------------
+surv$flood_val <- 0
+
+load("/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/R/Saved Data/flood_events.Rdata")
+
+for (i in 1:dim(surv)[1]) {
+  upaz <- surv$Upazila[i]
+  col_n <- df_upazila[df_upazila$shp.NAME_3==upaz, 1]    # equiv. number
+  year <- surv$Year[i]
+  fl_val <- sum(events_fl[events_fl$Year==(year-1), col_n+2])
+  surv$flood_val[i] <- fl_val
+}
+
+# ---------------- AIR QUALITY VALUES ----------------
+surv$air_pm25 <- 0
+
+load("/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/HRV/Cropped and Aggregated/air.RData")
+
+Year <- c(2006:2019)
+air_q <- data.frame(Year)
+shp <- read.dbf(file="/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/Bangladesh/gadm40_BGD_shp/gadm40_BGD_3.dbf")
+for (i in 1:dim(shp)[1]) {air_q[as.character(i)] <- 0}
+
+for (i in 1:length(Year)) {
+  df_air <- data.frame(cropped_air[i])
+  colnames(df_air) <- c('Year','pm25')
+  for (k in 1:dim(shp)[1]) {
+    air_q[air_q$Year==Year[i], 1+k] <- air_q[air_q$Year==Year[i], 1+k]+ df_air$pm25[k]
+  }
+}
+
+for (i in 1:dim(surv)[1]) {
+  upaz <- surv$Upazila[i]
+  col_n <- df_upazila[df_upazila$shp.NAME_3==upaz, 1]    # equiv. number
+  year <- surv$Year[i]
+  air_val <- max(air_q[air_q$Year==year, col_n+1])
+  surv$air_pm25[i] <- air_val
+}
+
+# ---------------- biodiv VALUES ----------------
+surv$biodiv <- 0
+
+load("/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/HRV/Cropped and Aggregated/biodiv.RData")
+
+Year <- c(2006:2019)
+biodiv <- data.frame(Year)
+shp <- read.dbf(file="/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/Bangladesh/gadm40_BGD_shp/gadm40_BGD_3.dbf")
+for (i in 1:dim(shp)[1]) {biodiv[as.character(i)] <- 0}
+
+
+df_bio <- data.frame(cropped_biodiv)
+colnames(df_bio) <- c('Year','biodiv')
+for (i in 1:length(Year)) {
+  for (k in 1:dim(shp)[1]) {
+    biodiv[biodiv$Year==Year[i], 1+k] <- biodiv[biodiv$Year==Year[i], 1+k]+ df_bio$biodiv[k] #*log(df_hrv$gpw_v4_population_count_rev11_2020_2pt5_min[k])
+  }
+}
+
+for (i in 1:dim(surv)[1]) {
+  upaz <- surv$Upazila[i]
+  col_n <- df_upazila[df_upazila$shp.NAME_3==upaz, 1]    # equiv. number
+  year <- surv$Year[i]
+  bio_val <- biodiv[biodiv$Year==year, col_n+1]
+  surv$biodiv[i] <- bio_val
+}
+
+# ---------------- Water sanitation access values ----------------
+surv$water <- 0
+load("/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/HRV/Cropped and Aggregated/water.RData")
+
+Year <- c(2006:2019)
+water <- data.frame(Year)
+shp <- read.dbf(file="/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/Bangladesh/gadm40_BGD_shp/gadm40_BGD_3.dbf")
+for (i in 1:dim(shp)[1]) {water[as.character(i)] <- 0}
+dates <- c(2006:2017)
+
+# Fill in values for water sanitation access per upazila level
+for (i in 1:length(dates)) {
+  y <- dates[i]
+  df_water <- data.frame(cropped_water[i])
+  colnames(df_water) <- c('Year','water')
+  for (k in 1:dim(shp)[1]) {
+    water[water$Year==y, 1+k] <- water[water$Year==y, 1+k]+ df_water$water[k]
+  }
+}
+# repeat 2017 values in 2018-2019
+for (year in c(2018,2019)) {
+  for (k in 1:dim(shp)[1]) {
+    water[water$Year==year, 1+k] <- water[water$Year==year, 1+k]+ df_water$water[k]
+  }
+}
+
+for (i in 1:dim(surv)[1]) {
+  surv$water[i] <- water[water$Year==surv$Year[i], 
+                         df_upazila[df_upazila$shp.NAME_3==surv$Upazila[i], 1] +1]
+}
+
+surv$water <- unlist(surv$water)
 # --------------- SAVE -----------------
 save(surv,file="/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/R/Saved Data/long_data.Rdata")
+load("/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/R/Saved Data/long_data.Rdata")

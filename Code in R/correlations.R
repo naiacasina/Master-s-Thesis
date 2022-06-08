@@ -8,12 +8,15 @@
 # ========================================================================
 library(foreign)
 
-Year <- rep(c(2006:2015), each=12)
-Month <- rep(c(1:12), times=10)
+Year <- rep(c(2005:2018), each=12)
+Month <- rep(c(1:12), times=14)
 events_fl <- data.frame(Year, Month)
 
 # Flooding
-fl_events <- list(c(2006,04,05),c(2006,05,07),c(2006,06,08),c(2006,07,09),
+fl_events <- list(c(2005,5),c(2005,6),c(2005,7),c(2005,7,8),c(2005,7),
+                  c(2005,8), c(2005,9), c(2005,9,10), c(2005,9,10),
+                  c(2005,10), c(2005,10),
+                  c(2006,04,05),c(2006,05,07),c(2006,06,08),c(2006,07,09),
                   c(2006,08,09),c(2006,08,09),c(2006,08,09),c(2006,08,09),
                   c(2007,06),c(2007,06),c(2007,06),c(2007,06,07),
                   c(2007,07), c(2007,07,09), c(2007,07,08), c(2007,07,10),
@@ -27,12 +30,15 @@ fl_events <- list(c(2006,04,05),c(2006,05,07),c(2006,06,08),c(2006,07,09),
                   c(2010,09), c(2010,09), c(2010,10), c(2011,7),c(2011,8,9,10),
                   c(2011,8,9),c(2011,9,10),c(2012,9), c(2013,10,11), c(2014,6),
                   c(2014,8,9),c(2014,8,9),c(2014,8,9),c(2014,8,9),c(2014,9,10),
-                  c(2015,6),c(2015,7,8),c(2015,7,8),c(2015,8,9))
+                  c(2015,6),c(2015,7,8),c(2015,7,8),c(2015,8,9),c(2016,4,5),
+                  c(2016,6,7,8), c(2016,7,8), c(2016,7,8), c(2017,3,4), c(2017,6,7),
+                  c(2017,7,8), c(2017,8), c(2017,8),c(2018,6), c(2018,8),
+                  c(2018,7,8), c(2018,9))
 
 shp <- read.dbf(file="/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/Bangladesh/gadm40_BGD_shp/gadm40_BGD_3.dbf")
 
 # Load aggregated flood events (cropped_fl)
-load(file="/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/HRV/Cropped and Aggregated/flood.RData")
+load(file="/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/HRV/Cropped and Aggregated/flood_mean.RData")
 
 # New columns for events_fl
 for (i in 1:dim(shp)[1]) {events_fl[as.character(i)] <- 0}
@@ -40,7 +46,7 @@ for (i in 1:dim(shp)[1]) {events_fl[as.character(i)] <- 0}
 for (i in 1:length(fl_events)) {
   l1 <- length(unlist(fl_events[i]))
   y <- unlist(fl_events[i])[1]
-  df_fl <- data.frame(cropped_fl[i])
+  df_fl <- data.frame(cropped_fl_mean[i])
   df_fl$flooded[is.na(df_fl$flooded)] <- 0
   for (j in 2:l1) {
     for (k in 1:dim(shp)[1]) {
@@ -49,15 +55,19 @@ for (i in 1:length(fl_events)) {
   }
 }
 
+save(events_fl, file="/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/R/Saved Data/flood_events.Rdata")
+
 # --------------- Survey Data ----------------
 # Load census datasets
 load(file="/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/HRV/Cropped and Aggregated/census11.RData")
 load(file="/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/HRV/Cropped and Aggregated/census15.RData")
 
 # 2011
+bihs11_di2 <- to_factor(read_stata("/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/Bangladesh/The ones I need from BIHS/2011-2012/Dependent + Independent Vars/038_mod_t1_male.dta"))
 floods_11 <- bihs11_di2[(bihs11_di2$t1_02=="major loss of crops due to flood")|(bihs11_di2$t1_02=="loss of productive assets due to floods")|(bihs11_di2$t1_02=="loss of livestock due to flood"),]
 
 # 2015
+bihs15_di2 <- to_factor(read_stata("/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/Bangladesh/The ones I need from BIHS/2015/Dependent + Independent Vars/050_r2_mod_t1_male.dta"))
 floods_15 <- bihs15_di2[(bihs15_di2$t1_02=="Loss of productive assets due to floods")|(bihs15_di2$t1_02=="Major loss of crops due to flood")|(bihs15_di2$t1_02=="Loss of livestock due to flood"),]
 
 # Creation of DFrame
@@ -84,15 +94,16 @@ for (i in 1:dim(floods_15)[1]) {
   reports_fl[(reports_fl$Year==floods_15$t1_05[i])&(reports_fl$Month==floods_15$t1_04[i]),2+col_n] <- reports_fl[(reports_fl$Year==floods_15$t1_05[i])&(reports_fl$Month==floods_15$t1_04[i]),3] + floods_15$t1_07[i]
 }
 
+events_fl2 <- events_fl[events_fl$Year%in%c(2006:2015),]
 # ------------------ Compute correlations ------------------
 # Plain correlations --------
-mat11 <- data.matrix(events_fl)
-mat15 <- data.matrix(reports_fl)
-mat11 <- mat11[13:120,3:464]
-mat15 <- mat15[13:120,3:464]
+matev <- data.matrix(events_fl2)
+matrep <- data.matrix(reports_fl)
+matev <- matev[13:120,3:464]
+matrep <- matrep[13:120,3:464]
 
-datuak <- data.frame(c(mat11),c(mat15))
-datuak <- lm(c.mat15. ~ c.mat11., data=datuak)
+datuak <- data.frame(c(matev),c(matrep))
+datuak <- lm(c.matrep. ~ c.matev., data=datuak)
 summary(datuak)
 # ---------------------------
 
