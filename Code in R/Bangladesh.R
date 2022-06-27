@@ -18,59 +18,59 @@ library(foreign)
 
 # ------------ BIHS datasets------------
 # harmonized
-bihs <- read_excel("Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/Bangladesh/BIHS_hamonized/dataverse_files/BIHS_household_2011_15.xlsx")
+bihs <- read_excel("path_to_data")
 
 # 1. 2011 SURVEY
 # 1.1. Dependent + Independent vars
 # to_factor() to encode vector as a factor (labelled in stata)
-bihs11_di1 <- to_factor(read_stata("/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/Bangladesh/The ones I need from BIHS/2011-2012/Dependent + Independent Vars/019_mod_i1_male.dta"))
-bihs11_di2 <- to_factor(read_stata("/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/Bangladesh/The ones I need from BIHS/2011-2012/Dependent + Independent Vars/038_mod_t1_male.dta"))
-bihs11_di3 <- to_factor(read_stata("/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/Bangladesh/The ones I need from BIHS/2011-2012/Dependent + Independent Vars/041_mod_v1_male.dta"))
+bihs11_di1 <- to_factor(read_stata("path_to_data"))
+bihs11_di2 <- to_factor(read_stata("path_to_data"))
+bihs11_di3 <- to_factor(read_stata("path_to_data"))
 
-damage_11 <- read_stata("/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/Bangladesh/The ones I need from BIHS/2011-2012/Dependent + Independent Vars/019_mod_i1_male.dta")
-losses_11 <- read_stata("/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/Bangladesh/The ones I need from BIHS/2011-2012/Dependent + Independent Vars/038_mod_t1_male.dta")
-migrate_11 <- read_stata("/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/Bangladesh/The ones I need from BIHS/2011-2012/Dependent + Independent Vars/041_mod_v1_male.dta")
+damage_11 <- read_stata("path_to_data")
+losses_11 <- read_stata("path_to_data")
+migrate_11 <- read_stata("path_to_data")
 
 # 1.2 Controls
-bihs11_c1 <- to_factor(read_stata("/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/Bangladesh/The ones I need from BIHS/2011-2012/Control Vars/001_mod_a_male.dta"))
-bihs11_c2 <- to_factor(read_stata("/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/Bangladesh/The ones I need from BIHS/2011-2012/Control Vars/003_mod_b1_male.dta"))
-bihs11_c3 <- to_factor(read_stata("/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/Bangladesh/The ones I need from BIHS/2011-2012/Control Vars/006_mod_d1_male.dta"))
-bihs11_c4 <- to_factor(read_stata("/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/Bangladesh/The ones I need from BIHS/2011-2012/Control Vars/008_mod_e_male.dta"))
-bihs11_c5 <- to_factor(read_stata("/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/Bangladesh/The ones I need from BIHS/2011-2012/Control Vars/009_mod_f_male.dta"))
-bihs11_c6 <- to_factor(read_stata("/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/Bangladesh/The ones I need from BIHS/2011-2012/Control Vars/010_mod_g_male.dta"))
-bihs11_c7 <- to_factor(read_stata("/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/Bangladesh/The ones I need from BIHS/2011-2012/Control Vars/019_mod_i1_male.dta"))
-bihs11_c8 <- to_factor(read_stata("/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/Bangladesh/The ones I need from BIHS/2011-2012/Control Vars/022_mod_j2_male.dta"))
+bihs11_c1 <- to_factor(read_stata("path_to_data"))
+bihs11_c2 <- to_factor(read_stata("path_to_data"))
+bihs11_c3 <- to_factor(read_stata("path_to_data"))
+bihs11_c4 <- to_factor(read_stata("path_to_data"))
+bihs11_c5 <- to_factor(read_stata("path_to_data"))
+bihs11_c6 <- to_factor(read_stata("path_to_data"))
+bihs11_c7 <-to_factor(read_stata("path_to_data"))
+bihs11_c8 <- to_factor(read_stata("path_to_data"))
 
-educ_11 <- read_stata("/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/Bangladesh/The ones I need from BIHS/2011-2012/Control Vars/003_mod_b1_male.dta")
-assets_11 <- read_stata("/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/Bangladesh/The ones I need from BIHS/2011-2012/Control Vars/006_mod_d1_male.dta")
-loans_11 <- read_stata("/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/Bangladesh/The ones I need from BIHS/2011-2012/Control Vars/009_mod_f_male.dta")
-subs_11 <- read_stata("/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/Bangladesh/The ones I need from BIHS/2011-2012/Control Vars/022_mod_j2_male.dta")
+educ_11 <- read_stata("path_to_data")
+assets_11 <-read_stata("path_to_data")
+loans_11 <-read_stata("path_to_data")
+subs_11 <- read_stata("path_to_data")
 
 # 2. 2015 SURVEY
 # 2.1. Dependent + Independent vars
 # to_factor() to encode vector as a factor (labelled in stata)
-bihs15_di1 <- to_factor(read_stata("/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/Bangladesh/The ones I need from BIHS/2015/Dependent + Independent Vars/025_r2_mod_i1_male.dta"))
-bihs15_di2 <- to_factor(read_stata("/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/Bangladesh/The ones I need from BIHS/2015/Dependent + Independent Vars/050_r2_mod_t1_male.dta"))
-bihs15_di3 <- to_factor(read_stata("/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/Bangladesh/The ones I need from BIHS/2015/Dependent + Independent Vars/053_r2_mod_v1_male.dta"))
+bihs15_di1 <- to_factor(read_stata("path_to_data"))
+bihs15_di2 <- to_factor(read_stata("path_to_data"))
+bihs15_di3 <- to_factor(read_stata("path_to_data"))
 
-damage_15 <- read_stata("/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/Bangladesh/The ones I need from BIHS/2015/Dependent + Independent Vars/025_r2_mod_i1_male.dta")
-losses_15 <- read_stata("/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/Bangladesh/The ones I need from BIHS/2015/Dependent + Independent Vars/050_r2_mod_t1_male.dta")
-migrate_15 <- read_stata("/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/Bangladesh/The ones I need from BIHS/2015/Dependent + Independent Vars/053_r2_mod_v1_male.dta")
+damage_15 <- read_stata("path_to_data")
+losses_15 <- read_stata("path_to_data")
+migrate_15 <- read_stata("path_to_data")
 
 # 2.2 Controls
-bihs15_c1 <- to_factor(read_stata("/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/Bangladesh/The ones I need from BIHS/2015/Control Vars/001_r2_mod_a_male.dta"))
-bihs15_c2 <- to_factor(read_stata("/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/Bangladesh/The ones I need from BIHS/2015/Control Vars/003_r2_male_mod_b1.dta"))
-bihs15_c3 <- to_factor(read_stata("/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/Bangladesh/The ones I need from BIHS/2015/Control Vars/010_r2_mod_d1_male.dta"))
-bihs15_c4 <- to_factor(read_stata("/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/Bangladesh/The ones I need from BIHS/2015/Control Vars/012_r2_mod_e_male.dta"))
-bihs15_c5 <- to_factor(read_stata("/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/Bangladesh/The ones I need from BIHS/2015/Control Vars/013_r2_mod_f_male.dta"))
-bihs15_c6 <- to_factor(read_stata("/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/Bangladesh/The ones I need from BIHS/2015/Control Vars/014_r2_mod_g_male.dta"))
-bihs15_c7 <- to_factor(read_stata("/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/Bangladesh/The ones I need from BIHS/2015/Control Vars/016_r2_mod_h2_male.dta"))
-bihs15_c8 <- to_factor(read_stata("/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/Bangladesh/The ones I need from BIHS/2015/Control Vars/033_r2_mod_j2_male.dta"))
+bihs15_c1 <- to_factor(read_stata("path_to_data"))
+bihs15_c2 <- to_factor(read_stata("path_to_data"))
+bihs15_c3 <- to_factor(read_stata("path_to_data"))
+bihs15_c4 <- to_factor(read_stata("path_to_data"))
+bihs15_c5 <- to_factor(read_stata("path_to_data"))
+bihs15_c6 <- to_factor(read_stata("path_to_data"))
+bihs15_c7 <- to_factor(read_stata("path_to_data"))
+bihs15_c8 <- to_factor(read_stata("path_to_data"))
 
-educ_15 <- read_stata("/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/Bangladesh/The ones I need from BIHS/2015/Control Vars/003_r2_male_mod_b1.dta")
-assets_15 <- read_stata("/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/Bangladesh/The ones I need from BIHS/2015/Control Vars/010_r2_mod_d1_male.dta")
-loans_15 <- read_stata("/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/Bangladesh/The ones I need from BIHS/2015/Control Vars/013_r2_mod_f_male.dta")
-subs_15 <- read_stata("/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/Bangladesh/The ones I need from BIHS/2015/Control Vars/033_r2_mod_j2_male.dta")
+educ_15 <- read_stata("path_to_data")
+assets_15 <- read_stata("path_to_data")
+loans_15 <-read_stata("path_to_data")
+subs_15 <- read_stata("path_to_data")
 
 # 3. 2018-2019 SURVEY
 # 3.1. Dependent + Independent vars
@@ -79,26 +79,24 @@ bihs18_di1 <- to_factor(read_stata("/Users/naiacasina/Documents/IDEA SECOND/Sem 
 bihs18_di2 <- to_factor(read_stata("/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/Bangladesh/The ones I need from BIHS/2018-2019/Dep indep vars/067_bihs_r3_male_mod_t1b.dta"))
 bihs18_di3 <- to_factor(read_stata("/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/Bangladesh/The ones I need from BIHS/2018-2019/Dep indep vars/072_bihs_r3_male_mod_v1.dta"))
 
-damage_18 <- read_stata("/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/Bangladesh/The ones I need from BIHS/2018-2019/Dep indep vars/030_bihs_r3_male_mod_i1.dta")
-losses_18 <- read_stata("/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/Bangladesh/The ones I need from BIHS/2018-2019/Dep indep vars/067_bihs_r3_male_mod_t1b.dta")
-migrate_18 <- read_stata("/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/Bangladesh/The ones I need from BIHS/2018-2019/Dep indep vars/072_bihs_r3_male_mod_v1.dta")
+damage_18 <- read_stata("path_to_data")
+losses_18 <- read_stata("path_to_data")
+migrate_18 <- read_stata("path_to_data")
 
 # 3.2 Controls
-bihs18_c1 <- to_factor(read_stata("/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/Bangladesh/The ones I need from BIHS/2018-2019/Control Vars/009_bihs_r3_male_mod_a.dta"))
-bihs18_c2 <- to_factor(read_stata("/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/Bangladesh/The ones I need from BIHS/2018-2019/Control Vars/010_bihs_r3_male_mod_b1.dta"))
-bihs18_c3 <- to_factor(read_stata("/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/Bangladesh/The ones I need from BIHS/2018-2019/Control Vars/015_bihs_r3_male_mod_d1.dta"))
-bihs18_c4 <- to_factor(read_stata("/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/Bangladesh/The ones I need from BIHS/2018-2019/Control Vars/017_bihs_r3_male_mod_e.dta"))
-bihs18_c5 <- to_factor(read_stata("/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/Bangladesh/The ones I need from BIHS/2018-2019/Control Vars/018_bihs_r3_male_mod_f.dta"))
-bihs18_c6 <- to_factor(read_stata("/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/Bangladesh/The ones I need from BIHS/2018-2019/Control Vars/020_bihs_r3_male_mod_g.dta"))
-bihs18_c7 <- to_factor(read_stata("/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/Bangladesh/The ones I need from BIHS/2018-2019/Control Vars/022_bihs_r3_male_mod_h2.dta"))
-bihs18_c8 <- to_factor(read_stata("/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/Bangladesh/The ones I need from BIHS/2018-2019/Control Vars/040_bihs_r3_male_mod_j2a.dta"))
+bihs18_c1 <- to_factor(read_stata("path_to_data"))
+bihs18_c2 <- to_factor(read_stata("path_to_data"))
+bihs18_c3 <- to_factor(read_stata("path_to_data"))
+bihs18_c4 <- to_factor(read_stata("path_to_data"))
+bihs18_c5 <- to_factor(read_stata("path_to_data"))
+bihs18_c6 <- to_factor(read_stata("path_to_data"))
+bihs18_c7 <- to_factor(read_stata("path_to_data"))
+bihs18_c8 <- to_factor(read_stata("path_to_data"))
 
-educ_18 <- read_stata("/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/Bangladesh/The ones I need from BIHS/2018-2019/Control Vars/010_bihs_r3_male_mod_b1.dta")
-assets_18 <- read_stata("/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/Bangladesh/The ones I need from BIHS/2018-2019/Control Vars/015_bihs_r3_male_mod_d1.dta")
-loans_18 <- read_stata("/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/Bangladesh/The ones I need from BIHS/2018-2019/Control Vars/018_bihs_r3_male_mod_f.dta")
-subs_18 <- read_stata("/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/Bangladesh/The ones I need from BIHS/2018-2019/Control Vars/040_bihs_r3_male_mod_j2a.dta")
-
-shp <- read.dbf(file = "/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/Bangladesh/BIHS_hamonized/dataverse_files/BGD_adm3/BGD_adm3.dbf")
+educ_18 <- read_stata("path_to_data")
+assets_18 <- read_stata("path_to_data")
+loans_18 <- read_stata("path_to_data")
+subs_18 <- read_stata("path_to_data")
 
 # harmonizing datasets
 
@@ -140,19 +138,15 @@ bihs15_c1 <- bihs15_c1[!duplicated(bihs15_c1$a01),]
 bihs18_c1$a01 <- round(bihs18_c1$a01)
 bihs18_c1 <- bihs18_c1[!duplicated(bihs18_c1$a01),]
 
-# -------------- Grab coordinates from harmonized dSet -------------- 
-library(readxl)
-bihs_Harmonized <- read_excel("Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/Bangladesh/BIHS_hamonized/BIHS_harm/BIHS_household_2011_15.xlsx")
-
-
 # -------------- Creating the harmonized DSEt -------------- 
 Year <- rep(c(2006:2019),times=dim(bihs11_c1)[1])
 HH <- rep(c(1:dim(bihs11_c1)[1]), each=14)
 surv <- data.frame(HH, Year)
 
+
 # Save census datasets
-save(bihs11_c1, file="/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/HRV/Cropped and Aggregated/census11.RData")
-save(bihs15_c1, file="/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/HRV/Cropped and Aggregated/census15.RData")
+save(bihs11_c1, file="path")
+save(bihs15_c1, file="path")
 
 # Enter Upazila names per hh
 surv$Upazila <- 0
@@ -176,167 +170,70 @@ for (i in 0:(dim(surv)[1]-1)) {
 
 # ----------- MIGRATION -----------
 surv$Migrate <- 0
-surv$Dom_migrate <- 0
 surv$Migrated_before <- 0
 
-# All Migration 2011
+# Migration 2011
 mig11 <- migrate_11[migrate_11$v1_01==1,]
-# Domestic Migration 2011
-mig_dom11 <- migrate_11[(migrate_11$v1_01==1)&(migrate_11$v1_09==1),]
-
 for (i in 1:dim(mig11)[1]) {
   if (sum(surv[surv$HH==mig11$a01[i],4])>0){
     # check whether previous members within the hh migrated
-    surv[(surv$HH==mig11$a01[i])&surv$Year==(2011-mig11$v1_03[i]),"Migrated_before"] <- 1
+    surv[(surv$HH==mig11$a01[i])&surv$Year==(2011-mig11$v1_03[i]),5] <- 1
   }
-  surv[(surv$HH==mig11$a01[i])&surv$Year==(2011-mig11$v1_03[i]),"Migrate"] <- 1
+  surv[(surv$HH==mig11$a01[i])&surv$Year==(2011-mig11$v1_03[i]),4] <- 1
 }
-for (i in 1:dim(mig_dom11)[1]) {
-  surv[(surv$HH==mig_dom11$a01[i])&surv$Year==(2011-mig_dom11$v1_03[i]),"Dom_migrate"] <- 1
-}
-
 # Migration 2015
 mig15 <- migrate_15[migrate_15$v1_01==1,]
-mig_dom15 <- migrate_15[(migrate_15$v1_01==1)&(migrate_15$v1_09==1), ]
 for (i in 1:dim(mig15)[1]) {
   if (sum(surv[surv$HH==mig15$a01[i],4])>0 | mig15$v1_15[i]==1 | mig15$v1_15[i]==3){
-    surv[(surv$HH==round(mig15$a01[i]))&(surv$Year==(2015-mig15$v1_03[i])),"Migrated_before"] <- 1
+    surv[(surv$HH==round(mig15$a01[i]))&(surv$Year==(2015-mig15$v1_03[i])),5] <- 1
   }
-  surv[(surv$HH==round(mig15$a01[i]))&(surv$Year==(2015-mig15$v1_03[i])),"Migrate"] <- 1
+  surv[(surv$HH==round(mig15$a01[i]))&(surv$Year==(2015-mig15$v1_03[i])),4] <- 1
 }
-for (i in 1:dim(mig_dom15)[1]) {
-  surv[(surv$HH==round(mig_dom15$a01[i]))&(surv$Year==(2015-mig_dom15$v1_03[i])),"Dom_migrate"] <- 1
-}
-
 # Migration 2018-2019
 mig18 <- migrate_18[migrate_18$v1_01==1,]
-mig_dom18 <- migrate_18[(migrate_18$v1_01==1)&(migrate_18$v1_09==1),]
-
 for (i in 1:dim(mig18)[1]) {
   if (sum(surv[surv$HH==mig18$a01[i],4] | mig18$v1_15[i]==1 | mig18$v1_15[i]==3)>0){
-    surv[(surv$HH==round(mig18$a01[i]))&(surv$Year==(2019-mig18$v1_03[i])),"Migrated_before"] <- 1
+    surv[(surv$HH==round(mig18$a01[i]))&(surv$Year==(2019-mig18$v1_03[i])),5] <- 1
   }
-  surv[(surv$HH==round(mig18$a01[i]))&(surv$Year==(2019-mig18$v1_03[i])),"Migrate"] <- 1
-}
-for (i in 1:dim(mig_dom18)[1]) {
-  surv[(surv$HH==round(mig_dom18$a01[i]))&(surv$Year==(2019-mig_dom18$v1_03[i])),"Dom_migrate"] <- 1
+  surv[(surv$HH==round(mig18$a01[i]))&(surv$Year==(2019-mig18$v1_03[i])),4] <- 1
 }
 
-# ----------- FLOODING, CYCLONE % DROUGHT LOSS & DAMAGES -----------
-surv$loss_fl_lag <- 0
-surv$dam_fl_lag <- 0
+# ----------- FLOODING LOSS -----------
+surv$loss_fl <- 0
+surv$dam_fl <- 0
 
-# losses & damages due to cyclones
-surv$loss_cy_lag <- 0
-surv$dam_cy_lag <- 0
-
-# losses & damages due to droughts
-surv$loss_dr_lag <- 0
-surv$dam_dr_lag <- 0
-
-# 2010-2011 -----------
-fl_loss11 <- losses_11[losses_11$t1_02==6|losses_11$t1_02==9|losses_11$t1_02==11|losses_11$t1_02==14,]
+# 2010-2011
+fl_loss11 <- losses_11[losses_11$t1_02==9|losses_11$t1_02==11|losses_11$t1_02==14,]
 fl_dam11 <- na.omit(damage_11[damage_11$i1_09b==1,])
 
-fl_dr_loss11 <- losses_11[losses_11$t1_02==10,]   # major loss due to droughts
-fl_dr_dam11 <- na.omit(damage_11[damage_11$i1_09b%in%c(4),])    # major harverst damages due to droughts
-
-fl_cy_loss11 <- losses_11[losses_11$t1_02==10,]   # major loss due to cyclones
-fl_cy_dam11 <- na.omit(damage_11[damage_11$i1_09b%in%c(5),])    # major harverst damages due to cyclones
-
 for (i in 1:dim(fl_loss11)[1]) {
-  surv[(surv$HH==fl_loss11$a01[i])&(surv$Year==(fl_loss11$t1_05[i]+1)), "loss_fl_lag"] <- 1
+  surv[(surv$HH==fl_loss11$a01[i])&(surv$Year==fl_loss11$t1_05[i]), "loss_fl"] <- 1
 }
-for (i in 1:dim(fl_dr_loss11)[1]) {
-  surv[(surv$HH==fl_dr_loss11$a01[i])&(surv$Year==(fl_dr_loss11$t1_05[i]+1)), "loss_dr_lag"] <- 1
-  surv[(surv$HH==fl_dr_loss11$a01[i])&(surv$Year==(fl_dr_loss11$t1_05[i]+1)), "loss_cy_lag"] <- 1
-}
-
 for (i in 1:dim(fl_dam11)[1]) {
-  surv[(surv$HH==fl_dam11$a01[i])&(surv$Year%in%c(2012,2013)), "dam_fl_lag"] <- 1
-}
-for (i in 1:dim(fl_dr_dam11)[1]) {
-  surv[(surv$HH==fl_dr_dam11$a01[i])&(surv$Year%in%c(2012,2013)), "dam_dr_lag"] <- 1
-}
-for (i in 1:dim(fl_cy_dam11)[1]) {
-  surv[(surv$HH==fl_cy_dam11$a01[i])&(surv$Year%in%c(2012,2013)), "dam_cy_lag"] <- 1
+  surv[(surv$HH==fl_dam11$a01[i])&(surv$Year==2011), "dam_fl"] <- 1
 }
 
-# 2015 -----------
-fl_loss15 <- losses_15[losses_15$t1_02==6|losses_15$t1_02==9|losses_15$t1_02==11|losses_15$t1_02==14,]
+# 2015
+fl_loss15 <- losses_15[losses_15$t1_02==9|losses_15$t1_02==11|losses_15$t1_02==14,]
 fl_dam15 <- na.omit(damage_15[damage_15$i1_09b==1,c(1,13)])
-
-# major loss due to other reasons drought
-fl_dr_loss15 <- losses_15[losses_15$t1_02==10,]
-# major damage to crops due to other reasons
-fl_dr_dam15 <- na.omit(damage_15[damage_15$i1_09b%in%c(4),c(1,13)])
-
-# major loss due to other reasons cyclone
-fl_cy_loss15 <- losses_15[losses_15$t1_02==37|losses_15$t1_02==38|losses_15$t1_02==39,]
-# major damage to crops due to other reasons
-fl_cy_dam15 <- na.omit(damage_15[damage_15$i1_09b%in%c(5),c(1,13)])
-
-  
 for (i in 1:dim(fl_loss15)[1]) {
-  surv[(surv$HH==round(fl_loss15$a01[i]))&(surv$Year==(fl_loss15$t1_05[i]+1)), "loss_fl_lag"] <- 1
+  surv[(surv$HH==round(fl_loss15$a01[i]))&(surv$Year==fl_loss15$t1_05[i]), "loss_fl"] <- 1
 }
-for (i in 1:dim(fl_dr_loss15)[1]) {
-  surv[(surv$HH==round(fl_dr_loss15$a01[i]))&(surv$Year==(fl_dr_loss15$t1_05[i]+1)), "loss_dr_lag"] <- 1
-}
-for (i in 1:dim(fl_cy_loss15)[1]) {
-  surv[(surv$HH==round(fl_cy_loss15$a01[i]))&(surv$Year==(fl_cy_loss15$t1_05[i]+1)), "loss_cy_lag"] <- 1
-}
-
-
 for (i in 1:dim(fl_dam15)[1]) {
-  surv[(surv$HH==round(fl_dam15$a01[i]))&(surv$Year%in%c(2015,2016,2017)), "dam_fl_lag"] <- 1
-}
-for (i in 1:dim(fl_dr_dam15)[1]) {
-  surv[(surv$HH==round(fl_dr_dam15$a01[i]))&(surv$Year%in%c(2015,2016,2017)), "dam_dr_lag"] <- 1
-}
-for (i in 1:dim(fl_cy_dam15)[1]) {
-  surv[(surv$HH==round(fl_cy_dam15$a01[i]))&(surv$Year%in%c(2015,2016,2017)), "dam_cy_lag"] <- 1
+  surv[(surv$HH==round(fl_dam15$a01[i]))&(surv$Year==2015), "dam_fl"] <- 1
 }
 
-# 2018-2019 -----------
-fl_loss18 <- losses_18[losses_18$t1b_01==6|losses_18$t1b_01==9|losses_18$t1b_01==10|losses_18$t1b_01==13|losses_18$t1b_01==14|losses_18$t1b_01==31|losses_18$t1b_01==33,]
+# 2018-2019
+fl_loss18 <- losses_18[losses_18$t1b_01==1|losses_18$t1b_01==37|losses_18$t1b_01==38|losses_18$t1b_01==40,]
 fl_dam18 <- na.omit(damage_18[damage_18$i1_09b==1,c(1,17)])
-
-fl_dr_loss18 <- losses_18[losses_18$t1b_01==45,]
-fl_dr_dam18 <- na.omit(damage_18[damage_18$i1_09b%in%c(4),c(1,17)])
-
-fl_cy_loss18 <- losses_18[losses_18$t1b_01==42|losses_18$t1b_01==46,]
-fl_cy_dam18 <- na.omit(damage_18[damage_18$i1_09b%in%c(5),c(1,17)])
-
-
 for (i in 1:dim(fl_loss18)[1]) {
   if(fl_loss18$t1b_03[i]==1){
     y <- bihs18_c1[bihs18_c1$a01==fl_loss18$a01[i], "a16_1_yy"]
   }else{y<-2016}
-  surv[(surv$HH==round(fl_loss18$a01[i]))&(surv$Year==(as.numeric(as.character(y[[1]]))+1)), "loss_fl_lag"] <- 1
+  surv[(surv$HH==round(fl_loss18$a01[i]))&(surv$Year==y[[1]]), "loss_fl"] <- 1
 }
-for (i in 1:dim(fl_dr_loss18)[1]) {
-  if(fl_dr_loss18$t1b_03[i]==1){
-    y <- bihs18_c1[bihs18_c1$a01==fl_dr_loss18$a01[i], "a16_1_yy"]
-  }else{y<-2016}
-  surv[(surv$HH==round(fl_dr_loss18$a01[i]))&(surv$Year==(as.numeric(as.character(y[[1]]))+1)), "loss_dr_lag"] <- 1
-}
-for (i in 1:dim(fl_cy_loss18)[1]) {
-  if(fl_cy_loss18$t1b_03[i]==1){
-    y <- bihs18_c1[bihs18_c1$a01==fl_cy_loss18$a01[i], "a16_1_yy"]
-  }else{y<-2016}
-  surv[(surv$HH==round(fl_cy_loss18$a01[i]))&(surv$Year==(as.numeric(as.character(y[[1]]))+1)), "loss_cy_lag"] <- 1
-}
-
-
 for (i in 1:dim(fl_dam18)[1]) {
-  surv[(surv$HH==round(fl_dam18$a01[i]))&(surv$Year%in%c(2018,2019)), "dam_fl_lag"] <- 1
-}
-for (i in 1:dim(fl_dr_dam18)[1]) {
-  surv[(surv$HH==round(fl_dr_dam18$a01[i]))&(surv$Year%in%c(2018,2019)), "dam_dr_lag"] <- 1
-}
-for (i in 1:dim(fl_cy_dam18)[1]) {
-  surv[(surv$HH==round(fl_cy_dam18$a01[i]))&(surv$Year%in%c(2018,2019)), "dam_cy_lag"] <- 1
+  surv[(surv$HH==round(fl_dam18$a01[i]))&(surv$Year==2018), "dam_fl"] <- 1
 }
 
 # ----------- RELIGION -----------
@@ -400,7 +297,7 @@ loans_18 <- na.omit(loans_18[loans_18$f06_a==1, c(1,19)])
 
 subsistence <- c(10,12,13,17,25)
 others <- c(1:26)
-others <- others[!others %in% subsistence & !others %in% c(24)]
+others <- others[!others %in% subsistence]
 
 # check the years!!!!! should I include them this way??
 y_11 <- c(2006:2011)
@@ -450,7 +347,7 @@ for (i in 1:dim(subs_18)[1]) {
 # --------------- ECONOMIC DEVELOPMENT PROXIED BY CHILD STUNTING -------------
 
 # Load cropped and aggregated raster data
-load(file="/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/HRV/Cropped and Aggregated/food_sec.RData")
+load(file="path")
 
 Year <- c(2006:2019)
 food_security <- data.frame(Year)
@@ -490,145 +387,5 @@ for (i in 1:dim(surv)[1]) {
   surv$f_sec[i] <- f_sec_value
 }
 
-surv$f_sec <- unlist(surv$f_sec)
-
-# --------------  POPULATION -----------------
-
-Year <- c(2006:2019)
-population <- data.frame(Year)
-# Dates of the events
-dates <- c(2005,2010,2015)
-
-shp <- read.dbf(file="/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/Bangladesh/gadm40_BGD_shp/gadm40_BGD_3.dbf")
-
-for (i in 1:dim(shp)[1]) {population[as.character(i)] <- 0}
-
-# Load cropped and aggregated raster data
-load(file="/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/HRV/Cropped and Aggregated/population.RData")
-
-y1 <- c(2006,2007,2008,2009)
-y2 <- c(2010,2011,2012,2013,2014)
-y3 <- c(2015,2016,2017,2018,2019)
-years <- list(y1,y2,y3)
-
-for (i in 1:length(dates)) {
-  y <- years[i]
-  df_pop <- data.frame(cropped_pop[i])
-  colnames(df_pop) <- c('Year','population')
-  for (k in 1:dim(shp)[1]) {
-    population[population$Year%in%y[[1]], 1+k] <- population[population$Year%in%y[[1]], 1+k]+ df_pop$population[k]
-  }
-}
-
-# Add values to survey
-surv$pop <- 0
-for (i in 1:dim(surv)[1]) {
-  upaz <- surv$Upazila[i]
-  col_n <- df_upazila[df_upazila$shp.NAME_3==upaz, 1]    # equiv. number
-  year <- surv$Year[i]
-  pop_val <- population[population$Year==year, col_n+1]
-  surv$pop[i] <- pop_val
-}
-surv$pop <- unlist(surv$pop)
-
-# ---------------- FLOODING VALUES ----------------
-surv$flood_val <- 0
-
-load("/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/R/Saved Data/flood_events.Rdata")
-
-for (i in 1:dim(surv)[1]) {
-  upaz <- surv$Upazila[i]
-  col_n <- df_upazila[df_upazila$shp.NAME_3==upaz, 1]    # equiv. number
-  year <- surv$Year[i]
-  fl_val <- sum(events_fl[events_fl$Year==(year-1), col_n+2])
-  surv$flood_val[i] <- fl_val
-}
-
-# ---------------- AIR QUALITY VALUES ----------------
-surv$air_pm25 <- 0
-
-load("/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/HRV/Cropped and Aggregated/air.RData")
-
-Year <- c(2006:2019)
-air_q <- data.frame(Year)
-shp <- read.dbf(file="/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/Bangladesh/gadm40_BGD_shp/gadm40_BGD_3.dbf")
-for (i in 1:dim(shp)[1]) {air_q[as.character(i)] <- 0}
-
-for (i in 1:length(Year)) {
-  df_air <- data.frame(cropped_air[i])
-  colnames(df_air) <- c('Year','pm25')
-  for (k in 1:dim(shp)[1]) {
-    air_q[air_q$Year==Year[i], 1+k] <- air_q[air_q$Year==Year[i], 1+k]+ df_air$pm25[k]
-  }
-}
-
-for (i in 1:dim(surv)[1]) {
-  upaz <- surv$Upazila[i]
-  col_n <- df_upazila[df_upazila$shp.NAME_3==upaz, 1]    # equiv. number
-  year <- surv$Year[i]
-  air_val <- max(air_q[air_q$Year==year, col_n+1])
-  surv$air_pm25[i] <- air_val
-}
-
-# ---------------- biodiv VALUES ----------------
-surv$biodiv <- 0
-
-load("/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/HRV/Cropped and Aggregated/biodiv.RData")
-
-Year <- c(2006:2019)
-biodiv <- data.frame(Year)
-shp <- read.dbf(file="/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/Bangladesh/gadm40_BGD_shp/gadm40_BGD_3.dbf")
-for (i in 1:dim(shp)[1]) {biodiv[as.character(i)] <- 0}
 
 
-df_bio <- data.frame(cropped_biodiv)
-colnames(df_bio) <- c('Year','biodiv')
-for (i in 1:length(Year)) {
-  for (k in 1:dim(shp)[1]) {
-    biodiv[biodiv$Year==Year[i], 1+k] <- biodiv[biodiv$Year==Year[i], 1+k]+ df_bio$biodiv[k] #*log(df_hrv$gpw_v4_population_count_rev11_2020_2pt5_min[k])
-  }
-}
-
-for (i in 1:dim(surv)[1]) {
-  upaz <- surv$Upazila[i]
-  col_n <- df_upazila[df_upazila$shp.NAME_3==upaz, 1]    # equiv. number
-  year <- surv$Year[i]
-  bio_val <- biodiv[biodiv$Year==year, col_n+1]
-  surv$biodiv[i] <- bio_val
-}
-
-# ---------------- Water sanitation access values ----------------
-surv$water <- 0
-load("/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/HRV/Cropped and Aggregated/water.RData")
-
-Year <- c(2006:2019)
-water <- data.frame(Year)
-shp <- read.dbf(file="/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/Bangladesh/gadm40_BGD_shp/gadm40_BGD_3.dbf")
-for (i in 1:dim(shp)[1]) {water[as.character(i)] <- 0}
-dates <- c(2006:2017)
-
-# Fill in values for water sanitation access per upazila level
-for (i in 1:length(dates)) {
-  y <- dates[i]
-  df_water <- data.frame(cropped_water[i])
-  colnames(df_water) <- c('Year','water')
-  for (k in 1:dim(shp)[1]) {
-    water[water$Year==y, 1+k] <- water[water$Year==y, 1+k]+ df_water$water[k]
-  }
-}
-# repeat 2017 values in 2018-2019
-for (year in c(2018,2019)) {
-  for (k in 1:dim(shp)[1]) {
-    water[water$Year==year, 1+k] <- water[water$Year==year, 1+k]+ df_water$water[k]
-  }
-}
-
-for (i in 1:dim(surv)[1]) {
-  surv$water[i] <- water[water$Year==surv$Year[i], 
-                         df_upazila[df_upazila$shp.NAME_3==surv$Upazila[i], 1] +1]
-}
-
-surv$water <- unlist(surv$water)
-# --------------- SAVE -----------------
-save(surv,file="/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/R/Saved Data/long_data.Rdata")
-load("/Users/naiacasina/Documents/IDEA SECOND/Sem 3/ENVS/Codes and Data/Migration/R/Saved Data/long_data.Rdata")
