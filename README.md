@@ -27,3 +27,7 @@ Using it as an independent var, I run a regression of Reported Losses due to flo
 ### ncdf_to_raster.R
 
 This file converts air quality pm2.5 data (used as a proxy for Air Quality) in netcdf format to a raster file GTiff format.
+
+### Regressions.R
+
+In this file, along with reg_table.R and reg_table_appendix.R, I run all the regressions (FE baseline specification, FE with controls, OLS, DiD with time and household FE, DiD with spatially-specific time and household FE).
